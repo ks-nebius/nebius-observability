@@ -122,7 +122,7 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\"}[1m])))",
           "legendFormat": "{{bucket}}",
           "refId": "A"
         }
@@ -172,14 +172,19 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\",storage_class=\"STANDARD\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\",storage_class=\"STANDARD\"}[1m])))",
           "legendFormat": "{{bucket}} Standard",
           "refId": "A"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\",storage_class=\"ENHANCED_THROUGHPUT\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\",storage_class=\"ENHANCED_THROUGHPUT\"}[1m])))",
           "legendFormat": "{{bucket}} Enhanced Throughput",
           "refId": "B"
+        },
+        {
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\",storage_class=\"INTELLIGENT\"}[1m])))",
+          "legendFormat": "{{bucket}} Intelligent ({{intelligent_tier}})",
+          "refId": "C"
         }
       ],
       "title": "Space by storage class",
@@ -368,22 +373,22 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"simple_objects\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"simple_objects\"}[1m])))",
           "legendFormat": "{{bucket}} Simple objects",
           "refId": "A"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"multipart_objects\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"multipart_objects\"}[1m])))",
           "legendFormat": "{{bucket}} Multipart objects",
           "refId": "B"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"inflight_parts\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=\"inflight_parts\"}[1m])))",
           "legendFormat": "{{bucket}} Multipart uploads",
           "refId": "C"
         }
       ],
-      "title": "Object counts",
+      "title": "Objects count",
       "description": "Number of objects. Single, multipart objects, and incomplete multipart uploads are counted separately.",
       "transparent": false,
       "datasource": {
@@ -416,17 +421,17 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"simple_objects\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"simple_objects\"}[1m])))",
           "legendFormat": "{{bucket}} Simple objects",
           "refId": "A"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"multipart_objects\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"multipart_objects\"}[1m])))",
           "legendFormat": "{{bucket}} Multipart objects",
           "refId": "B"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"inflight_parts\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=\"inflight_parts\"}[1m])))",
           "legendFormat": "{{bucket}} Multipart uploads",
           "refId": "C"
         }
@@ -464,17 +469,22 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", storage_class=\"STANDARD\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", storage_class=\"STANDARD\"}[1m])))",
           "legendFormat": "{{bucket}} Standard",
           "refId": "A"
         },
         {
-          "expr": "sum by(bucket) (max by(bucket, counter) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", storage_class=\"ENHANCED_THROUGHPUT\"}[1m])))",
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", storage_class=\"ENHANCED_THROUGHPUT\"}[1m])))",
           "legendFormat": "{{bucket}} Enhanced Throughput",
           "refId": "B"
+        },
+        {
+          "expr": "sum by(bucket) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", storage_class=\"INTELLIGENT\"}[1m])))",
+          "legendFormat": "{{bucket}} Intelligent ({{intelligent_tier}})",
+          "refId": "C"
         }
       ],
-      "title": "Object counts by storage class",
+      "title": "Objects count by storage class",
       "description": "Number of objects stored in different storage classes.",
       "transparent": false,
       "datasource": {
@@ -486,6 +496,176 @@
         "w": 8,
         "x": 16,
         "y": 20
+      },
+      "repeatDirection": "h",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "",
+            "steps": []
+          },
+          "custom": {
+            "fillOpacity": 5,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum by(bucket, counters_type) (max without(iam_container_id, node) (last_over_time(buckets_stat_size{bucket=~\"$bucket\", counter=~\"simple_objects|multipart_objects\"}[1m])))",
+          "legendFormat": "{{bucket}} {{counters_type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Space by version",
+      "description": "Amount of storage used by current and noncurrent object versions.",
+      "transparent": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "repeatDirection": "h",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "",
+            "steps": []
+          },
+          "custom": {
+            "fillOpacity": 5,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum by(bucket, counters_type) (max without(iam_container_id, node) (last_over_time(buckets_stat_quantity{bucket=~\"$bucket\", counter=~\"simple_objects|multipart_objects\"}[1m])))",
+          "legendFormat": "{{bucket}} {{counters_type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Objects count by version",
+      "description": "Number of current and noncurrent object versions.",
+      "transparent": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "repeatDirection": "h",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "",
+            "steps": []
+          },
+          "custom": {
+            "fillOpacity": 5,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "title": "Lifecycle",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 0,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum by (storage_class) (rate(lifecycle_transition_network_bytes{bucket=~\"$bucket\", direction=\"traffic-in\"}[1m])) \u003e 0",
+          "legendFormat": "{{bucket}} upload to {{storage_class}}",
+          "refId": "A"
+        },
+        {
+          "expr": "-sum by (storage_class) (rate(lifecycle_transition_network_bytes{bucket=~\"$bucket\", direction=\"traffic-out\"}[1m])) \u003c 0",
+          "legendFormat": "{{bucket}} download from {{storage_class}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Traffic by Transition Lifecycle",
+      "description": "Traffic consumed by Transition Lifecycle of a bucket.",
+      "transparent": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "repeatDirection": "h",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "binBps",
+          "thresholds": {
+            "mode": "",
+            "steps": []
+          },
+          "custom": {
+            "fillOpacity": 5,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(increase_pure(lifecycle_transition_quota_limit_exceeded_total{bucket=~\"$bucket\"}[1m]))",
+          "legendFormat": "{{bucket}} upload to {{storage_class}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Transition Lifecycle failures",
+      "description": "Failures of Transition Lifecycle.",
+      "transparent": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
       },
       "repeatDirection": "h",
       "fieldConfig": {
