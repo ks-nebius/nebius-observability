@@ -1,6 +1,6 @@
 {
   "uid": "nebius-gpu",
-  "title": "Nebius GPU",
+  "title": "Nebius GPU (per instance)",
   "description": "Dashboard to visualize data from the NVIDIA Data Center GPU Manager (DCGM).",
   "tags": [
     "Nebius",
